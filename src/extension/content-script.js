@@ -13,6 +13,7 @@ import {
 
 import { DEVICE_DEFINITIONS } from '../devtool/js/devices';
 import { EmulatorSettings } from '../devtool/js/emulatorStates';
+import { polyfillDynamicIframes } from '../devtool/js/polyfillDynamicIframes';
 
 let pingJob = null;
 
@@ -178,6 +179,29 @@ window.addEventListener(
 	},
 	false,
 );
+
+polyfillDynamicIframes();
+
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.tagName === 'IFRAME') {
+        console.log("Tibor iframe injector");
+        node.addEventListener('load', () => {
+              sendActionToEmulator(EMULATOR_ACTIONS.EXCLUDE_POLYFILL);
+              });
+        // reloadInspectedTab();
+        // togglePolyfill();
+      }
+    });
+  });
+});
+
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+});
+
 
 EmulatorSettings.instance.load().then(() => {
 	triggerPolyfillAction(POLYFILL_ACTIONS.DEVICE_INIT, {

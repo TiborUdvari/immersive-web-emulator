@@ -14,13 +14,15 @@
 	"background": {
 		"service_worker": "dist/service-worker.js"
 	},
-	"permissions": ["storage", "scripting"],
+	"permissions": ["storage", "scripting", "webNavigation"],
 	"host_permissions": ["http://*/*", "https://*/*"],
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*"],
 			"js": ["dist/content.js"],
 			"run_at": "document_start",
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
 			"all_frames": true
 		}
 	],

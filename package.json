@@ -7,6 +7,13 @@
 			],
 			"extensions": "js,jsx,css,html",
 			"quiet": false
+		},
+    "build:polyfill": {
+			"patterns": [
+				"polyfill"
+			],
+			"extensions": "js,jsx,css,html",
+			"quiet": false
 		}
 	},
 	"scripts": {

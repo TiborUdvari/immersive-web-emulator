@@ -582,6 +582,14 @@ const isNativeFunction = (func) => {
 };
 
 const overrideAPI = (global) => {
+if (window.self !== window.top) {
+    // The code is running inside an iframe
+    console.log("This code is running inside an iframe.");
+} else {
+    // The code is not running inside an iframe
+    console.log("This code is not running inside an iframe.");
+}
+
 	console.log(
 		'[Immersive Web Emulator] native WebXR API successfully overridden',
 	);

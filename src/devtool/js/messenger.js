@@ -9,7 +9,7 @@ import { CLIENT_ACTIONS, EMULATOR_ACTIONS } from './actions';
 import { DEVICE, HAND_STRINGS, OBJECT_NAME } from './constants';
 import { EmulatorSettings, emulatorStates } from './emulatorStates';
 
-const tabId = chrome.devtools.inspectedWindow.tabId;
+const tabId = chrome.devtools?.inspectedWindow.tabId;
 
 const connection = {
 	port: null,
@@ -34,6 +34,7 @@ const executeAction = (action, payload = {}) => {
 	payload.tabId = tabId;
 	payload.action = action;
 	try {
+    console.log("temp - post msg ", payload);
 		connection.port.postMessage(payload);
 	} catch (_e) {
 		connection.connect();
@@ -166,6 +167,7 @@ export const toggleHandVisibility = (deviceId, visible) => {
 };
 
 export const reloadInspectedTab = () => {
+  console.log("temp - reload")
 	executeAction(EMULATOR_ACTIONS.EXCLUDE_POLYFILL);
 };
 
